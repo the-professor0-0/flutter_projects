@@ -1,0 +1,70 @@
+Future<http.Response> createAlbum()async {
+    Fluttertoast.showToast(
+        msg: "Please Wait...Your order is being Processes",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 3,
+        backgroundColor: Colors.lightBlueAccent,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+    if (formKey.currentState.validate()) {
+      print("Sending");
+      var result= await http.post(
+        'https://developmenthub.xyz/wp-json/wc/v3/orders?consumer_key=ck_673ea1fe9ec293b5640cf4a3c96dff7eb6f534ea&consumer_secret=cs_7148dbf6e44c761770d61e0fbc54d30a0cd903da',
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          'payment_method': 'cod',
+          'payment_method_title': 'Cash On Delivery',
+          'set_paid': false,
+          'billing': {
+            'first_name': fName.text,
+            'last_name': lName.text,
+            'address_1': address.text,
+            'address_2': '',
+            'city': city.text,
+            'state': '',
+            'postcode': '',
+            'country': '',
+            'email': 'john.doe@example.com',
+            'phone': phone.text,
+          },
+          'line_items': [
+            {'product_id': widget.id, 'quantity': widget.qty , "total":(double.parse(widget.price.toString())*double.parse(widget.qty.toString())).toString()}
+          ],
+          'shipping': {
+            'first_name': fName.text,
+            'last_name': lName.text,
+            'address_1': address.text,
+            'address_2': '',
+            'city': city.text,
+            'state': '',
+            'postcode': '',
+            'country': ''
+          },
+          'shipping_lines': [
+            {
+              'method_id': 'flat_rate',
+              'method_title': 'Flat Rate',
+              'total': '0.0'
+            }
+          ],
+        }),
+      );
+      print(result);
+      if(result.toString().toLowerCase()=="instance of 'response'"){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Status(statusDetail: "Success",)),
+        );
+      }
+      else{
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Status(statusDetail: "Order Failed",)),
+        );
+      }
+    }
+  }

@@ -1,0 +1,73 @@
+Widget navigationBar(context,indexNo){
+  return CurvedNavigationBar(
+    backgroundColor: Colors.white,
+    items: <Widget>[
+      Icon(Icons.dashboard_outlined,size: 15,color: Colors.black,),
+      Icon(Icons.details_rounded,size: 15,color: Colors.black,),
+      Icon(Icons.update_outlined,size: 15,color: Colors.black,),
+      Icon(Icons.policy_outlined,size: 15,color: Colors.black,),
+      Icon(Icons.notes,size: 15,color: Colors.black,),
+      Icon(Icons.question_answer_outlined,size: 15,color: Colors.black,),
+    ],
+    index: indexNo,
+    height: 50,
+    animationDuration: Duration(milliseconds: 200),
+    animationCurve: Curves.bounceInOut,
+    onTap: (index){
+      if(index == 0){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => Home(),
+          ),
+              (route) => false,
+        );
+      }
+      if(index == 1){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => OrderDetails(),
+          ),
+              (route) => false,
+        );
+      }
+      if(index == 2){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => Update(),
+          ),
+              (route) => false,
+        );
+      }
+      if(index == 3){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => PrivacyPolicy(),
+          ),
+              (route) => false,
+        );
+      }
+      if(index == 4){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => TermsAndConditions(),
+          ),
+              (route) => false,
+        );
+      }
+      if(index == 5){
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => FAQs(),
+          ),
+              (route) => false,
+        );
+      }
+    },
+  );
+}
